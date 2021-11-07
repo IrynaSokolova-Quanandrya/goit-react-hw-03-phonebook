@@ -15,6 +15,22 @@ class Phonebook extends Component {
     filter: "",
   };
 
+  componentDidMount(prevProps, prevState) {
+    const contacts = localStorage.getItem('contacts')
+    const parseContacts = JSON.parse(contacts)
+
+    this.setState({contacts: parseContacts})
+    console.log(parseContacts);
+    console.log(contacts);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+    }
+    console.log('componentDidUpdate:', this.state);
+    console.log('componentDidUpdate:', prevState);
+  }
+
   addSubmitData = ({ name, number }) => {
     const friendName = name;
     if (this.state.contacts.some(({ name }) => name === friendName)) {
